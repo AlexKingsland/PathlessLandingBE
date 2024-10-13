@@ -2,10 +2,13 @@ from flask import Flask
 from config import SecretsConfig
 from database.models import db
 from api import subscribe_activity
+from flask_cors import CORS
 
 def create_app():
     app = Flask(__name__)
     app.config.from_object(SecretsConfig)
+
+    CORS(app) # Allow cross origin calls
 
     db.init_app(app)
 
