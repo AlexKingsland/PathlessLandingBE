@@ -1,5 +1,5 @@
 import re
-from flask import Flask, jsonify, request
+from flask import Flask, jsonify, request, Response 
 from config import SecretsConfig, ValidationConfig
 from database.models import Subscriber, db
 from api import subscribe_activity
@@ -14,6 +14,11 @@ db.init_app(app)
 
 with app.app_context():
     db.create_all()  # Create the database tables if they don't exist
+
+@app.before_request
+def basic_authentication():
+    if request.method.lower() == 'options':
+        return Response()
 
 # Regex pattern for email validation
 email_regex = r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$'
