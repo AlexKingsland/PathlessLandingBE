@@ -6,27 +6,15 @@ from flask_cors import CORS
 
 app = Flask(__name__)
 app.config.from_object(SecretsConfig)
+CORS(app, support_credentials=True) # Allow cross origin calls
 
-def init_app():
-    CORS(app, support_credentials=True) # Allow cross origin calls
+db.init_app(app)
 
-    db.init_app(app)
+with app.app_context():
+    db.create_all()  # Create the database tables if they don't exist
 
-    with app.app_context():
-        db.create_all()  # Create the database tables if they don't exist
-
-    # Register the API Blueprint
-    app.register_blueprint(subscribe_activity.subscribe_bp)
-    return app
-
-@app.before_request
-def before_request():
-    headers = {'Access-Control-Allow-Origin': '*',
-               'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE, OPTIONS',
-               'Access-Control-Allow-Headers': 'Content-Type'}
-    if request.method.lower() == 'options':
-        return jsonify(headers), 200
+# Register the API Blueprint
+app.register_blueprint(subscribe_activity.subscribe_bp)
 
 if __name__ == '__main__':
-    init_app()
     app.run(debug=True)
