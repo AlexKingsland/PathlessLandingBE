@@ -3,7 +3,6 @@ from flask import Blueprint, request, jsonify
 from database.models import db, Subscriber
 from config import ValidationConfig
 from sqlalchemy.exc import IntegrityError
-from flask_cors import cross_origin
 
 subscribe_bp = Blueprint('subscribe', __name__)
 
@@ -11,7 +10,6 @@ subscribe_bp = Blueprint('subscribe', __name__)
 email_regex = r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$'
 
 @subscribe_bp.route('/subscribe', methods=['POST'])
-@cross_origin(supports_credentials=True)
 def subscribe():
     data = request.get_json()
 
