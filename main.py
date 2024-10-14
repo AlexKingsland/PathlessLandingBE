@@ -8,7 +8,7 @@ def create_app():
     app = Flask(__name__)
     app.config.from_object(SecretsConfig)
 
-    CORS(app) # Allow cross origin calls
+    CORS(app, support_credentials=True) # Allow cross origin calls
 
     db.init_app(app)
 
