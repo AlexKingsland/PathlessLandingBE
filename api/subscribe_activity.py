@@ -6,6 +6,12 @@ from sqlalchemy.exc import IntegrityError
 
 subscribe_bp = Blueprint('subscribe', __name__)
 
+api_cors_config = {
+  "origins": ["*"],
+  "methods": ["OPTIONS", "GET", "POST"],
+  "allow_headers": ["Authorization", "Content-Type"]
+}
+
 # Regex pattern for email validation
 email_regex = r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$'
 
