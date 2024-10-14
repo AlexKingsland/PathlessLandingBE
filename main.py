@@ -5,6 +5,7 @@ from api import subscribe_activity
 from flask_cors import CORS
 
 app = Flask(__name__)
+CORS(app, support_credentials=True) # Allow cross origin calls
 app.config.from_object(SecretsConfig)
 CORS(app, support_credentials=True) # Allow cross origin calls
 
