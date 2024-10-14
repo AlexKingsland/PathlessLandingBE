@@ -1,5 +1,6 @@
+import os
 from flask import Flask
-from config import SecretsConfig
+from config import HostConfig, SecretsConfig
 from database.models import db
 from flask_cors import CORS
 from api import subscribe_activity
@@ -17,4 +18,4 @@ with app.app_context():
 app.register_blueprint(subscribe_activity.subscribe_bp)
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(host='0.0.0.0', port=HostConfig.PORT)

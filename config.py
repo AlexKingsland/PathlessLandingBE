@@ -8,3 +8,6 @@ class SecretsConfig:
 class ValidationConfig:
     MAX_EMAIL_LEN = 120
     MAX_NAME_LEN = 100
+
+class HostConfig:
+    PORT = int(os.environ.get('PORT', 5555))
