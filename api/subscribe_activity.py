@@ -48,3 +48,11 @@ def subscribe():
     except Exception as e:
         db.session.rollback()  # Roll back the session in case of generic error
         return jsonify({'error': 'An unexpected error occurred'}), 500
+    
+@subscribe_bp.route('/subscribe', methods=['OPTIONS'])
+def preflight():
+    response = jsonify()
+    response.headers['Access-Control-Allow-Origin'] = '*'
+    response.headers['Access-Control-Allow-Headers'] = 'Content-Type, Authorization'
+    response.headers['Access-Control-Allow-Methods'] = 'POST, OPTIONS'
+    return response, 200
