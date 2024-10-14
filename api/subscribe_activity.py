@@ -7,7 +7,7 @@ from sqlalchemy.exc import IntegrityError
 subscribe_bp = Blueprint('subscribe', __name__)
 
 api_cors_config = {
-  "origins": ["*"],
+  "origins": "*",
   "methods": ["OPTIONS", "GET", "POST"],
   "allow_headers": ["Authorization", "Content-Type"]
 }
