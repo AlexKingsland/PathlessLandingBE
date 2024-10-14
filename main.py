@@ -15,11 +15,6 @@ db.init_app(app)
 with app.app_context():
     db.create_all()  # Create the database tables if they don't exist
 
-@app.before_request
-def basic_authentication():
-    if request.method.lower() == 'options':
-        return Response()
-
 # Regex pattern for email validation
 email_regex = r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$'
 
@@ -55,6 +50,14 @@ def subscribe():
     except Exception as e:
         db.session.rollback()  # Roll back the session in case of generic error
         return jsonify({'error': 'An unexpected error occurred'}), 500
+
+@app.route('/subscribe', methods=['OPTIONS'])
+def preflight():
+    response = jsonify()
+    response.headers['Access-Control-Allow-Origin'] = '*'
+    response.headers['Access-Control-Allow-Headers'] = 'Content-Type, Authorization'
+    response.headers['Access-Control-Allow-Methods'] = 'POST, OPTIONS'
+    return response, 200
 
 if __name__ == '__main__':
     app.run(debug=True)
